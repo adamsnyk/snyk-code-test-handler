@@ -1,8 +1,8 @@
 import json
 import pprint
+import sys
 
-with open('code_tests.json') as f:
-    code_json = json.load(f)
+code_json=json.load(sys.stdin)
 
 results = code_json['runs'][0]['results']
 
