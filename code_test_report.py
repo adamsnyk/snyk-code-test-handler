@@ -21,4 +21,4 @@ for result in results:
 
 
 pprint.pprint(simple_results)
-print(len(simple_results))
+print("\nTotal Issues: {}\n".format(len(simple_results)))
