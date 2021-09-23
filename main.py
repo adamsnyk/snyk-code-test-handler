@@ -2,7 +2,7 @@
 
 import argparse
 import json
-import pprint
+from datetime import datetime
 import sys
 
 
@@ -16,7 +16,7 @@ def get_data_from_file(file_path: str) -> dict:
     return data
 
 
-def parse_data(data: dict) -> list:
+def fetch_simple_results(data: dict) -> list:
     results = data["runs"][0]["results"]
 
     simple_results = []
@@ -35,9 +35,46 @@ def parse_data(data: dict) -> list:
         )
         simple_results.append(simple_result)
 
-    pprint.pprint(simple_results)
-    print("\nTotal Issues: {}\n".format(len(simple_results)))
+    return simple_results
 
+def compose_html_results(simple_results: list) -> str:
+    html_results = [
+        """
+        <div style="padding-bottom: 24px;">
+            <div>Vuln Type: {}</div>
+            <div>Severity: {}</div>
+            <div>Message: {}</div>
+            <div>File: {}</div>
+            <div>Lines: {}</div>
+        </div>\n
+        """.format(
+            simple_result['type'],
+            simple_result['level'],
+            simple_result['message'],
+            simple_result['file'],
+            simple_result['lines'],
+        ) for simple_result in simple_results
+    ]
+    return " ".join(html_results)
+
+def compose_html_file(simple_results: list, html_path: str) -> None:
+    html = '''
+        <html>
+            <body>
+                <h2>Snyk Code Test</h2>
+                <h3>Date + Time: {}</h3>
+                <div style="height: 24px;" />
+                <h3>Results:</h3>
+                {}
+            </body>
+        </html>
+    '''.format(
+        datetime.now(),
+        compose_html_results(simple_results=simple_results)
+    )
+
+    with open(html_path, 'w') as f:
+        f.write(html)
 
 if __name__ == "__main__":
 
@@ -56,4 +93,6 @@ if __name__ == "__main__":
     else:
         data = get_data_from_stdin()
 
-    parse_data(data)
+    simple_results = fetch_simple_results(data)
+
+    compose_html_file(simple_results=simple_results, html_path='output.html')
