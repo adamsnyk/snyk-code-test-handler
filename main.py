@@ -72,7 +72,7 @@ def compose_html_file(simple_results: list, html_path: str) -> None:
         datetime.now(),
         compose_html_results(simple_results=simple_results)
     )
-    print(html)
+
     with open(html_path, 'w') as f:
         f.write(html)
 
