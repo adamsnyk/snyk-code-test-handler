@@ -76,8 +76,7 @@ def compose_html_file(simple_results: list, html_path: str) -> None:
     with open(html_path, 'w') as f:
         f.write(html)
 
-if __name__ == "__main__":
-
+def cli():
     parser = argparse.ArgumentParser(description="Simplify Snyk Code output.")
     parser.add_argument(
         "--file",
@@ -96,3 +95,6 @@ if __name__ == "__main__":
     simple_results = fetch_simple_results(data)
 
     compose_html_file(simple_results=simple_results, html_path='output.html')
+
+if __name__ == "__main__":
+    cli()
