@@ -1,3 +1,4 @@
 .dccache
 __pycache__
 venv/
+outputs/
