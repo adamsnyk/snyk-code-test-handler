@@ -1,5 +1,7 @@
 # Snyk Code to HTML
 
+<img width="500" src="https://raw.githubusercontent.com/adamsnyk/snyk-code-test-handler/8ee7c96866edefd8e1bfa89babc0061847e9e383/assets/example-output.png">
+
 ## Getting Started
 
 Pipe `snyk code test --json` into other artifacts and formats.
