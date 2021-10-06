@@ -40,7 +40,7 @@ def fetch_simple_results(data: dict) -> list:
 def compose_html_results(simple_results: list) -> str:
     html_results = [
         """
-        <div class="vuln-card">
+        <div style="border: 1px solid grey;border-radius: 3px;padding: 20px;">
             <div>Vuln Type: {}</div>
             <div>Severity: {}</div>
             <div>Message: {}</div>
@@ -58,33 +58,9 @@ def compose_html_results(simple_results: list) -> str:
     return " ".join(html_results)
 
 def compose_html_file(simple_results: list, html_path: str) -> None:
-    html = '''
+    html = """
         <html>
-            <style>
-                .header {
-                    background-color: #4b45a9;
-                    padding: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-around;
-                }
-                body {
-                    background-color: lightgray;
-                    font-family: Arial, Helvetica, sans-serif;
-                }
-                h2 {
-                    color: white;
-                }
-                p {
-                    color: red;
-                }
-                    .vuln-card {
-                    border: 1px solid grey;
-                    border-radius: 3px;
-                    padding: 20px;
-                }
-            </style>
-            <div class="header">
+            <div style="background-color: #4b45a9;padding: 20px;display: flex;flex-direction: column;justify-content: space-around;">
                 <svg width="68px" height="35px" viewBox="0 0 68 35" version="1.1" xmlns="http://www.w3.org/2000/svg" role="img">
                     <title>Snyk - Open Source Security</title>
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -95,20 +71,20 @@ def compose_html_file(simple_results: list, html_path: str) -> None:
                             </g>
                         </g>
                 </svg>
-                <h2>Snyk Code Test Report</h2>
+                <h2 style="color: white;">Snyk Code Test Report</h2>
                 <h3>Date + Time: {}</h3>
             </div>
-            <body>
+            <body style="background-color: lightgray;font-family: Arial, Helvetica, sans-serif;">
                 <div style="height: 24px;" />
                 <h3>Results:</h3>
                 {}
             </body>
         </html>
-    '''.format(
+    """.format(
         datetime.now(),
         compose_html_results(simple_results=simple_results)
     )
-
+    
     with open(html_path, 'w') as f:
         f.write(html)
 
