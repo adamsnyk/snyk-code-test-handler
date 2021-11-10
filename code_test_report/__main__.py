@@ -15,6 +15,14 @@ def get_data_from_file(file_path: str) -> dict:
         data = json.load(f)
     return data
 
+def level_mapping(level: str) -> str:
+    if level == 'error':
+        return 'high'
+    elif level == 'warning':
+        return 'medium'
+    else:
+        return 'low'
+
 
 def fetch_simple_results(data: dict) -> list:
     results = data["runs"][0]["results"]
@@ -24,7 +32,7 @@ def fetch_simple_results(data: dict) -> list:
     for result in results:
         simple_result = {}
         simple_result["type"] = result["ruleId"]
-        simple_result["level"] = result["level"]
+        simple_result["level"] = level_mapping(result["level"])
         simple_result["message"] = result["message"]["text"]
         simple_result["file"] = result["locations"][0]["physicalLocation"][
             "artifactLocation"
